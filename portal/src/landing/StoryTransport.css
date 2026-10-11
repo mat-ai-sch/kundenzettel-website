@@ -1,0 +1,71 @@
+/*
+ * Zwei Zeichen wie zuvor, 44 × 44, darunter die Beschriftung.
+ */
+.lp-transport {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.lp-transport-icons {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.lp-transport-btn {
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(23, 36, 28, 0.28);
+  border-radius: 8px;
+  background: transparent;
+  color: #2c2c2c;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease, transform 100ms ease;
+}
+
+.lp-transport-btn:hover {
+  border-color: rgba(23, 36, 28, 0.5);
+  color: #17241c;
+}
+
+.lp-transport-btn:active {
+  transform: translateY(1px);
+}
+
+.lp-transport-btn:focus-visible {
+  outline: 3px solid #116b50;
+  outline-offset: 3px;
+}
+
+.lp-transport-btn:disabled {
+  color: rgba(23, 36, 28, 0.28);
+  border-color: rgba(23, 36, 28, 0.16);
+  cursor: default;
+  transform: none;
+}
+
+.lp-transport-btn svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lp-transport-caption {
+  margin: 0;
+  color: rgba(23, 36, 28, 0.72);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}

@@ -1,0 +1,578 @@
+/*
+ * Landing-Story-Stage: eine Fläche, zwei Spalten (Chat | Auftrag) oder, bei schmaler Bühne,
+ * Chat über Auftrag (vertikaler Split, kein Sheet, kein Peek; Wire 06 §3/§6).
+ * Klassen aus App.css (.col, .chat, .messages, .order …) werden wiederverwendet;
+ * alles Landing-spezifische hängt unter .lp-presentation, damit weder Landing-CSS
+ * Bubbles/Buttons global überschreibt noch umgekehrt.
+ *
+ * Phase 6 (statisch): Größen kommen aus Typ-Stufen (S/M/L/XL, Wire 06 §4), die per Container-Query auf
+ * die Bühne gewählt werden (`container: lp-stage`, siehe LandingPage.css). Kein scale(), kein zoom,
+ * kein nowrap/ellipsis im Auftrag: Werte wachsen in Zeilen, nie in kleinerer Schrift.
+ */
+.lp-presentation {
+  /* Typ-Stufe M/L (Standard); S und XL überschreiben unten per Container-Query. */
+  --lp-t-bubble: 15px;
+  --lp-t-time: 11px;
+  --lp-t-key: 20px;
+  --lp-t-label: 12px;
+  --lp-t-status: 12px;
+  --lp-t-name: 1.3rem;
+  --lp-pad: 1.05rem;
+  --lp-gap: 0.8rem;
+
+  isolation: isolate;
+  contain: layout paint;
+  position: relative;
+  display: grid;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(20, 30, 25, 0.08);
+  border-radius: 12px;
+  background: var(--panel, #fff);
+  pointer-events: none; /* rein präsentativ */
+  user-select: none;
+}
+
+/* S: vertikaler Split (Bühne < 640). Der Schlüsselwert bleibt zum Bubble-Text ≥ 1,3 (19 : 14). */
+@container lp-stage (width < 640px) {
+  .lp-presentation {
+    --lp-t-bubble: 14px;
+    --lp-t-time: 10.5px;
+    --lp-t-key: 19px;
+    --lp-t-label: 11px;
+    --lp-t-name: 1.15rem;
+    --lp-pad: 0.9rem;
+    --lp-gap: 0.65rem;
+  }
+}
+/* XL: Bühne ≥ 1000. Die Bühne wächst, die Schrift mit ihr (nie umgekehrt). */
+@container lp-stage (width >= 1000px) {
+  .lp-presentation {
+    --lp-t-bubble: 17px;
+    --lp-t-time: 12px;
+    --lp-t-key: 23px;
+    --lp-t-status: 13px;
+    --lp-t-name: 1.5rem;
+    --lp-pad: 1.25rem;
+    --lp-gap: 0.95rem;
+  }
+}
+
+.lp-presentation .col {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Vertikaler Split: Chat nimmt den Rest, der Auftrag seine eigene (reservierte) Höhe. */
+.lp-presentation[data-layout='stack'] {
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+.lp-presentation[data-layout='stack'] .lp-presentation-chat {
+  border-right: 0;
+  border-bottom: 1px solid var(--line, #e1e5e0);
+}
+.lp-presentation[data-layout='stack'] .lp-presentation-order .col-head {
+  height: 36px;
+  min-height: 36px;
+  max-height: 36px;
+}
+/*
+ * R1 (Mobil): Die Bühne soll so kurz sein, dass Preis (vereinbart) und Status im ersten Bild stehen.
+ * Nur Layout, keine Inhalte entfallen: Termin und Budget teilen sich eine Zeile, der Preis (die Pointe)
+ * bekommt die volle Breite; die fünf Statuslabels stehen in einer Zeile.
+ */
+.lp-presentation[data-layout='stack'] .chat-head {
+  height: 36px;
+  min-height: 36px;
+  max-height: 36px;
+}
+.lp-presentation[data-layout='stack'] .lp-composer {
+  padding: 0.4rem 0.6rem;
+}
+.lp-presentation[data-layout='stack'] .lp-composer-field {
+  min-height: 36px;
+}
+.lp-presentation[data-layout='stack'] .lp-composer-send {
+  width: 36px;
+  height: 36px;
+}
+.lp-presentation[data-layout='stack'] .order-inner {
+  --lp-pad: 0.75rem;
+  --lp-gap: 0.5rem;
+}
+.lp-presentation[data-layout='stack'] .fields {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--lp-pad);
+  row-gap: var(--lp-gap);
+}
+.lp-presentation[data-layout='stack'] .field[data-order-field='preisVereinbart'] {
+  grid-column: 1 / -1;
+}
+/* Status: eine Zeile, sobald alle fünf Labels passen (gemessen: 10 px ≈ 298 px, 11 px ≈ 322 px Breite); sonst Umbruch. */
+.lp-presentation[data-layout='stack'] .status-track {
+  gap: 0.2rem;
+}
+.lp-presentation[data-layout='stack'] .status-track button {
+  flex: 0 1 auto;
+  min-width: 0;
+  padding: 0.28rem 0.25rem;
+  font-size: 10px;
+  letter-spacing: 0;
+}
+@container lp-stage (width >= 325px) {
+  .lp-presentation[data-layout='stack'] .status-track {
+    flex-wrap: nowrap;
+  }
+  .lp-presentation[data-layout='stack'] .status-track button {
+    flex-grow: 1;
+  }
+}
+@container lp-stage (width >= 350px) {
+  .lp-presentation[data-layout='stack'] .status-track button {
+    font-size: 11px;
+  }
+}
+
+/* ---- Chat + Auftrag-Köpfe: gleiche Zeilenhöhe, durchgehende untere Linie ---- */
+.lp-presentation .chat-head,
+.lp-presentation .col-head {
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--line, #e1e5e0);
+  overflow: hidden;
+}
+.lp-presentation .messages {
+  overflow: hidden;
+  justify-content: flex-end;
+  padding: 0.75rem 1rem 0.9rem;
+  gap: 0.4rem;
+}
+.lp-presentation .day-chip {
+  margin: 0.2rem 0 0.4rem;
+}
+/* Breitere Bubbles als in der Demo (65 %), damit mk13 nicht zur Textsäule wird; Aufbau bleibt gleich. */
+.lp-presentation .bubble-row {
+  max-width: 84%;
+}
+.lp-presentation .bubble .caption {
+  font-size: var(--lp-t-bubble);
+  line-height: 1.4;
+}
+.lp-presentation .bubble .foot {
+  font-size: var(--lp-t-time);
+}
+
+/* Mobil: ältere Nachrichten (mk11) weichen oben in einer Maske; die Maske liegt nur auf dem Chatfenster. */
+.lp-presentation[data-layout='stack'] .msg-toolbar {
+  display: none; /* „Heute“ entfällt mobil: Platz für Nachrichten, die Maske blendet ältere ohnehin aus */
+}
+.lp-presentation[data-layout='stack'] .bubble-row {
+  max-width: 92%;
+}
+.lp-presentation[data-layout='stack'] .messages {
+  padding-top: 20px; /* Maskenhöhe 16 px: die beiden letzten Bubbles (mk13, mk14) liegen immer unterhalb der Maske */
+  padding-bottom: 0.6rem;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16px);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 16px);
+}
+
+/* ---- Auftrag ------------------------------------------------------------- */
+/* Nichts wird seitlich abgeschnitten; die Bühnenhöhe reserviert alle Zeilen, daher kein Scrollen. */
+.lp-presentation .order {
+  overflow: hidden;
+}
+
+.lp-presentation .order-back,
+.lp-presentation .chat-back,
+.lp-presentation .msg-menu-btn,
+.lp-presentation .media-zoom-btn {
+  display: none;
+}
+
+.lp-presentation .field input,
+.lp-presentation .field textarea {
+  cursor: default;
+}
+
+/* Wachsendes, umbrechendes Wertefeld (siehe OrderFields `wrapValues`). */
+.field-grow {
+  display: grid;
+}
+.field-grow::after,
+.field-grow > textarea {
+  grid-area: 1 / 1;
+  min-width: 0;
+  padding: 0.25rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  font: inherit;
+  font-size: 13.5px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.field-grow::after {
+  content: attr(data-value);
+  visibility: hidden;
+  pointer-events: none;
+}
+.field-grow > textarea {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  resize: none;
+  background: transparent;
+  color: inherit;
+}
+.field.is-live .field-grow > textarea {
+  animation: order-field-live 1.55s ease;
+  border-bottom-color: var(--sage);
+}
+.field.is-superseded .field-grow > textarea {
+  color: var(--muted, #6b6b6b);
+  text-decoration: line-through;
+  text-decoration-color: rgba(120, 120, 120, 0.7);
+}
+.field-grow > textarea {
+  transition: color 320ms ease, text-decoration-color 320ms ease;
+}
+
+/* Wrapper nur für `inert`; das Layout der Felder bleibt wie in der Demo. */
+.lp-fields-host {
+  display: contents;
+}
+
+.lp-presentation .order-inner {
+  gap: var(--lp-gap);
+  padding: var(--lp-pad);
+  align-content: start;
+}
+.lp-presentation .fields {
+  gap: var(--lp-gap);
+}
+/* Termin, Budget, Preis sind alle Schlüsselwerte (Wire 06 §4). Label bleibt sichtbar, auch bei leerem Wert. */
+.lp-presentation .field label {
+  margin-bottom: 0.1rem;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  color: rgba(23, 36, 28, 0.46);
+}
+.lp-presentation .field-grow::after,
+.lp-presentation .field-grow > textarea {
+  padding: 0.2rem 0;
+  font-size: var(--lp-t-key);
+  line-height: 1.3;
+}
+.lp-presentation .field input,
+.lp-presentation .field textarea {
+  font-variant-numeric: tabular-nums;
+}
+.lp-presentation .field input {
+  padding: 0.25rem 0;
+  font-size: var(--lp-t-key);
+  border-bottom-color: rgba(20, 30, 25, 0.08);
+}
+
+/* Produktkopf: konstant, Name wächst in Zeilen. */
+.lp-presentation .product-strip {
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 0.75rem;
+  padding-bottom: var(--lp-gap);
+}
+.lp-presentation .product-strip img,
+.lp-presentation .product-strip-ph {
+  width: 56px;
+  height: 56px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: #eceae6;
+}
+.lp-presentation .product-strip > div {
+  min-width: 0;
+}
+.lp-presentation .product-strip h3 {
+  font-size: var(--lp-t-name);
+  overflow-wrap: anywhere;
+}
+.lp-presentation .product-strip p {
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+@container lp-stage (width < 640px) {
+  .lp-presentation .product-strip {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 0.6rem;
+  }
+  .lp-presentation .product-strip img,
+  .lp-presentation .product-strip-ph {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Status: die echte Leiste mit allen fünf Labels (06b C-03). Sie umbricht in Zeilen, nie Ellipsis, nie Scroll. */
+.lp-presentation .status-track {
+  gap: 0.15rem;
+  min-width: 0;
+}
+.lp-presentation .status-track button {
+  padding: 0.18rem 0.32rem;
+  border-color: transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(23, 36, 28, 0.4);
+  font-size: var(--lp-t-status);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-transform: none;
+  white-space: normal;
+}
+.lp-presentation .status-track button.is-on {
+  border-color: transparent;
+  background: rgba(20, 30, 25, 0.07);
+  color: #17241c;
+  font-weight: 600;
+}
+.lp-presentation .status-track button.is-live {
+  box-shadow: none;
+}
+
+/* ---- Bewegung der Story (nicht Teil von Phase 6, unverändert) ------------- */
+/* Neue Felder gleiten sanft ein; das Layout der übrigen Felder bleibt ruhig. */
+.lp-presentation .field {
+  animation: lp-field-in 360ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes lp-field-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Ersetzter Wunschwert: durchgestrichen und zurückgenommen. */
+.lp-presentation .field input {
+  transition: color 320ms ease, text-decoration-color 320ms ease;
+}
+.lp-presentation .field.is-superseded input {
+  color: var(--muted, #6b6b6b);
+  text-decoration: line-through;
+  text-decoration-color: rgba(120, 120, 120, 0.7);
+}
+
+/* Nachrichten-Wrapper ohne eigene Box, damit das Flex-Layout der Demo erhalten bleibt. */
+.lp-msg {
+  display: contents;
+}
+/* Volle Zeilenbreite, die Bubble darin bleibt links oder rechts ausgerichtet. */
+.lp-presentation .lp-flip {
+  width: 100%;
+  min-width: 0;
+  align-self: stretch;
+}
+.lp-flip.is-entering .bubble {
+  animation: lp-msg-in 880ms cubic-bezier(0.33, 0, 0.2, 1) both;
+}
+.lp-flip.is-entering.is-handoff .bubble {
+  animation: lp-msg-handoff 560ms cubic-bezier(0.33, 0, 0.2, 1) both;
+}
+@keyframes lp-msg-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  42% {
+    opacity: 0.45;
+    transform: translateY(7px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lp-msg-handoff {
+  0% {
+    opacity: 0.4;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.lp-msg .bubble {
+  transition: opacity 220ms ease, box-shadow 220ms ease;
+}
+.lp-msg[data-source='dim'] .bubble,
+.lp-presentation[data-source-active] .lp-typing {
+  opacity: 0.38;
+}
+.lp-msg[data-source='hit'] .bubble {
+  box-shadow: inset 0 0 0 1px rgba(17, 107, 80, 0.2);
+}
+
+/* Markierte Textstellen (CSS Custom Highlight API, siehe story/textMarks.ts). */
+::highlight(lp-mark) {
+  background-color: rgba(17, 107, 80, 0.08);
+  color: inherit;
+}
+
+/* Typing-Indikator (eingehend). */
+.lp-typing .bubble {
+  padding: 0.6rem 0.8rem;
+}
+.lp-typing-dots {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  height: 14px;
+}
+.lp-typing-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8696a0;
+  /* Endlich (IX-V2): der Indikator steht höchstens 0,5 s, drei Takte decken auch eine Pause ab. */
+  animation: lp-dot 1.1s ease-in-out 3;
+}
+.lp-typing-dots i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.lp-typing-dots i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes lp-dot {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+/* Composer: nur für die ausgehende Atelier-Antwort. */
+.lp-composer {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  background: #f0f2f5;
+  border-top: 1px solid #d1d7db;
+}
+.lp-composer-field {
+  flex: 1;
+  min-width: 0;
+  min-height: 38px;
+  max-height: 92px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  background: #fff;
+  font-size: var(--lp-t-bubble);
+  line-height: 1.4;
+  color: #111b21;
+}
+.lp-composer-field.is-typing {
+  align-items: flex-end;
+}
+.lp-composer-placeholder {
+  color: #667781;
+}
+.lp-composer-stack {
+  display: grid;
+  width: 100%;
+}
+.lp-composer-sizer,
+.lp-composer-text {
+  grid-area: 1 / 1;
+  display: block;
+  width: 100%;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.lp-composer-sizer {
+  visibility: hidden;
+}
+.lp-caret {
+  display: inline-block;
+  width: 1px;
+  height: 1.05em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: #111b21;
+  animation: lp-blink 1s steps(1) 3;
+}
+@keyframes lp-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.lp-composer-send {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: #8696a0;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+.lp-composer-send.is-ready {
+  background: #00a884;
+  color: #fff;
+}
+
+/* Fliegende Daten-Tokens (DOM-Klone, aria-hidden). */
+.lp-token {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #075e54;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 1px 1px rgba(7, 94, 84, 0.28); /* kein Schatten mit Unschärfe > 2 px (Brief §7) */
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-presentation .field,
+  .lp-presentation .field.is-live input,
+  .lp-presentation .field.is-live textarea,
+  .lp-presentation .product-strip.is-live h3,
+  .lp-typing-dots i,
+  .lp-caret,
+  .lp-flip.is-entering .bubble,
+  .lp-flip.is-entering.is-handoff .bubble {
+    animation: none;
+  }
+  .lp-presentation .field input,
+  .lp-msg .bubble,
+  .lp-composer-send {
+    transition: none;
+  }
+}
