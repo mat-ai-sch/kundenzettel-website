@@ -185,6 +185,26 @@ function Datenschutz() {
         verbindet sich Ihr Browser außerdem mit challenges.cloudflare.com; ein daraus stammender
         Prüfwert wird mit der Frage übertragen.
       </p>
+      <p>
+        Bei Fragen mit passenden Einträgen in der Kundenzettel-Wissensbasis wird der Fragetext zur
+        Antworterstellung an die OpenAI API weitergegeben. Die API-Anfrage setzt <code>store: false</code>;
+        das verhindert keine gesonderten Protokolle zur Missbrauchsüberwachung bei OpenAI. Unser
+        berechtigtes Interesse ist es, eine interaktive Produktdemo anzubieten und missbräuchliche
+        Anfragen an die öffentliche Schnittstelle zu begrenzen. Für diese Verarbeitung stützen wir uns
+        auf Art. 6 Abs. 1 lit. f DSGVO.
+      </p>
+      <p>
+        Der Kundenzettel-Worker legt Fragen nicht in einer dauerhaften Datenbank ab. Für die
+        Begrenzung auf zwölf öffentliche Fragen je IP-Adresse innerhalb von zehn Minuten hält er die
+        IP-Adresse und einen Zähler im Arbeitsspeicher einer Worker-Instanz. Ein abgelaufenes
+        Zählfenster wird erst bei einer weiteren Frage derselben IP-Adresse ersetzt; andernfalls
+        verbleibt der Eintrag bis zum Ende dieser Worker-Instanz. Dafür besteht keine feste
+        Löschfrist. Technische Protokolle der beteiligten Anbieter können unabhängig davon nach
+        deren Einstellungen und Bedingungen gespeichert werden; die tatsächlich eingestellten
+        Fristen sind hier nicht belegt. OpenAI bewahrt Protokolle zur Missbrauchsüberwachung nach
+        seinen Standardangaben bis zu 30 Tage auf; gesetzliche oder Sicherheitsgründe können eine
+        längere Aufbewahrung erfordern. <a href="https://developers.openai.com/api/docs/guides/your-data">OpenAI-Datenkontrollen</a>
+      </p>
 
       <h2>Cookies</h2>
       <p>
