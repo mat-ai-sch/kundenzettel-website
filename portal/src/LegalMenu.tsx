@@ -115,13 +115,18 @@ function Impressum() {
       <h1 id="legal-title">Impressum</h1>
       <p className="legal-intro">Angaben gemäß § 5 DDG</p>
 
-      <h2>Anbieter</h2>
+      <h2>Betreiber dieser Website</h2>
       <address>
-        Kundenzettel<br />
         Matthias Schürmann<br />
         Am Lunapark 5<br />
         41749 Viersen
       </address>
+
+      <h2>Anbieterin des Kundenzettel-Dienstes</h2>
+      <p>
+        WUNDERWERKstatt – Damaris Schürmann ist Anbieterin des geplanten Kundenzettel-Dienstes.
+        Der Dienst befindet sich in einer geschlossenen Pilotphase. <a href="/anbieter/">Angaben zur Dienstanbieterin</a>
+      </p>
 
       <h2>Kontakt</h2>
       <p>
@@ -139,15 +144,15 @@ function Datenschutz() {
     <>
       <h1 id="legal-title">Datenschutz</h1>
       <p className="legal-intro">
-        Diese Hinweise gelten für alle Seiten unter kundenzettel.de, www.kundenzettel.de,
-        demo.kundenzettel.de und www.demo.kundenzettel.de. Die Verarbeitung ist für jede Unterseite
-        dieselbe.
+        Diese Hinweise betreffen die öffentliche Website unter kundenzettel.de und
+        www.kundenzettel.de einschließlich der Anbieter-Seite sowie die Demo unter
+        demo.kundenzettel.de und www.demo.kundenzettel.de. Die geschützte Betreiber-App und die
+        Verarbeitung im Kundenzettel-Dienst sind hiervon nicht erfasst.
       </p>
 
-      <h2>Verantwortlicher</h2>
-      <p>Verantwortlich für die Datenverarbeitung auf diesen Seiten ist:</p>
+      <h2>Verantwortlicher für Website und Demo</h2>
+      <p>Verantwortlich für die Datenverarbeitung auf den hier genannten öffentlichen Seiten ist:</p>
       <address>
-        Kundenzettel<br />
         Matthias Schürmann<br />
         Am Lunapark 5<br />
         41749 Viersen
@@ -157,16 +162,10 @@ function Datenschutz() {
 
       <h2>Hosting und Server-Logfiles</h2>
       <p>
-        Die genannten Seiten werden über IONOS (IONOS SE) bereitgestellt. Beim Aufruf verarbeitet IONOS
-        technische Zugriffsdaten, insbesondere IP-Adresse, Datum und Uhrzeit, aufgerufene Ressource und
-        Browsertyp. Die Verarbeitung dient der Bereitstellung und Absicherung der Seiten (Art. 6 Abs. 1
-        lit. f DSGVO).
-      </p>
-
-      <h2>Auftragsverarbeitung</h2>
-      <p>
-        Mit IONOS besteht ein Auftragsverarbeitungsvertrag nach Art. 28 DSGVO. Inhalt des Vertrags und
-        Angaben zu Unterauftragsverarbeitern ergeben sich aus den IONOS-Vertragsunterlagen.
+        Die Dateien der öffentlichen Website und Demo werden über GitHub Pages ausgeliefert.
+        Dabei fallen für die technische Übertragung insbesondere IP-Adresse, Zeitpunkt,
+        angeforderte Ressource und Browserangaben an. Die Fragefunktion der Demo verwendet zusätzlich
+        den unten genannten API-Endpunkt.
       </p>
 
       <h2>Öffentliche Website und Demo</h2>
@@ -174,7 +173,37 @@ function Datenschutz() {
         kundenzettel.de und www.kundenzettel.de zeigen die öffentliche Website. demo.kundenzettel.de und
         www.demo.kundenzettel.de zeigen eine Demonstration mit fiktiven Beispieldaten. Chats, Aufträge
         und Kontakte der Demo bleiben im Browser und werden nicht an WhatsApp oder Meta übermittelt.
-        Echte Kundenakten werden dort nicht geführt.
+        Echte Kundenakten werden dort nicht geführt. Für Fragen an die Demo gilt der folgende Abschnitt.
+      </p>
+
+      <h2>Fragefunktion der Demo</h2>
+      <p>
+        Wenn Sie in der Demo eine eigene Frage senden oder eine Beispielfrage auswählen, übermittelt
+        Ihr Browser den Fragetext und technische Verbindungsdaten an api.kundenzettel.de/public/info/qa,
+        um eine Antwort zu erhalten. Bitte geben Sie dort keine Namen, Telefonnummern oder Angaben zu
+        Aufträgen ein. Wenn ein Cloudflare-Turnstile-Sicherheitscheck für die Demo aktiviert ist,
+        verbindet sich Ihr Browser außerdem mit challenges.cloudflare.com; ein daraus stammender
+        Prüfwert wird mit der Frage übertragen.
+      </p>
+      <p>
+        Bei Fragen mit passenden Einträgen in der Kundenzettel-Wissensbasis wird der Fragetext zur
+        Antworterstellung an die OpenAI API weitergegeben. Die API-Anfrage setzt <code>store: false</code>;
+        das verhindert keine gesonderten Protokolle zur Missbrauchsüberwachung bei OpenAI. Unser
+        berechtigtes Interesse ist es, eine interaktive Produktdemo anzubieten und missbräuchliche
+        Anfragen an die öffentliche Schnittstelle zu begrenzen. Für diese Verarbeitung stützen wir uns
+        auf Art. 6 Abs. 1 lit. f DSGVO.
+      </p>
+      <p>
+        Der Kundenzettel-Worker legt Fragen nicht in einer dauerhaften Datenbank ab. Für die
+        Begrenzung auf zwölf öffentliche Fragen je IP-Adresse innerhalb von zehn Minuten hält er die
+        IP-Adresse und einen Zähler im Arbeitsspeicher einer Worker-Instanz. Ein abgelaufenes
+        Zählfenster wird erst bei einer weiteren Frage derselben IP-Adresse ersetzt; andernfalls
+        verbleibt der Eintrag bis zum Ende dieser Worker-Instanz. Dafür besteht keine feste
+        Löschfrist. Technische Protokolle der beteiligten Anbieter können unabhängig davon nach
+        deren Einstellungen und Bedingungen gespeichert werden; die tatsächlich eingestellten
+        Fristen sind hier nicht belegt. OpenAI bewahrt Protokolle zur Missbrauchsüberwachung nach
+        seinen Standardangaben bis zu 30 Tage auf; gesetzliche oder Sicherheitsgründe können eine
+        längere Aufbewahrung erfordern. <a href="https://developers.openai.com/api/docs/guides/your-data">OpenAI-Datenkontrollen</a>
       </p>
 
       <h2>Cookies</h2>
@@ -184,9 +213,10 @@ function Datenschutz() {
 
       <h2>Google Fonts</h2>
       <p>
-        Zur einheitlichen Darstellung von Schriftarten werden Google Fonts geladen (Google Ireland
-        Limited). Dabei wird eine Verbindung zu Servern von Google hergestellt; Ihre IP-Adresse kann
-        übermittelt werden. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+        Die öffentliche Hauptseite und Demo laden Google Fonts (Google Ireland Limited). Dabei wird
+        eine Verbindung zu Servern von Google hergestellt; Ihre IP-Adresse kann übermittelt werden.
+        Die eigenständige Anbieter-Seite verwendet Systemschriften. Rechtsgrundlage ist Art. 6 Abs. 1
+        lit. f DSGVO.
       </p>
 
       <h2>Kontakt per E-Mail</h2>
