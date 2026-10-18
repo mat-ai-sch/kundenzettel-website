@@ -144,9 +144,10 @@ function Datenschutz() {
     <>
       <h1 id="legal-title">Datenschutz</h1>
       <p className="legal-intro">
-        Diese Hinweise gelten für alle Seiten unter kundenzettel.de, www.kundenzettel.de,
-        demo.kundenzettel.de und www.demo.kundenzettel.de. Die Verarbeitung ist für jede Unterseite
-        dieselbe.
+        Diese Hinweise betreffen die öffentliche Website unter kundenzettel.de und
+        www.kundenzettel.de einschließlich der Anbieter-Seite sowie die Demo unter
+        demo.kundenzettel.de und www.demo.kundenzettel.de. Die geschützte Betreiber-App und die
+        Verarbeitung im Kundenzettel-Dienst sind hiervon nicht erfasst.
       </p>
 
       <h2>Verantwortlicher für Website und Demo</h2>
@@ -161,9 +162,10 @@ function Datenschutz() {
 
       <h2>Hosting und Server-Logfiles</h2>
       <p>
-        Die öffentliche Website und Demo werden als statische Seiten über GitHub Pages bereitgestellt.
-        Beim Aufruf werden für die Übertragung technische Zugriffsdaten verarbeitet, insbesondere
-        IP-Adresse, Zeitpunkt, angeforderte Ressource und Browserangaben.
+        Die Dateien der öffentlichen Website und Demo werden über GitHub Pages ausgeliefert.
+        Dabei fallen für die technische Übertragung insbesondere IP-Adresse, Zeitpunkt,
+        angeforderte Ressource und Browserangaben an. Die Fragefunktion der Demo verwendet zusätzlich
+        den unten genannten API-Endpunkt.
       </p>
 
       <h2>Öffentliche Website und Demo</h2>
@@ -171,7 +173,17 @@ function Datenschutz() {
         kundenzettel.de und www.kundenzettel.de zeigen die öffentliche Website. demo.kundenzettel.de und
         www.demo.kundenzettel.de zeigen eine Demonstration mit fiktiven Beispieldaten. Chats, Aufträge
         und Kontakte der Demo bleiben im Browser und werden nicht an WhatsApp oder Meta übermittelt.
-        Echte Kundenakten werden dort nicht geführt.
+        Echte Kundenakten werden dort nicht geführt. Für Fragen an die Demo gilt der folgende Abschnitt.
+      </p>
+
+      <h2>Fragefunktion der Demo</h2>
+      <p>
+        Wenn Sie in der Demo eine eigene Frage senden oder eine Beispielfrage auswählen, übermittelt
+        Ihr Browser den Fragetext und technische Verbindungsdaten an api.kundenzettel.de/public/info/qa,
+        um eine Antwort zu erhalten. Bitte geben Sie dort keine Namen, Telefonnummern oder Angaben zu
+        Aufträgen ein. Wenn ein Cloudflare-Turnstile-Sicherheitscheck für die Demo aktiviert ist,
+        verbindet sich Ihr Browser außerdem mit challenges.cloudflare.com; ein daraus stammender
+        Prüfwert wird mit der Frage übertragen.
       </p>
 
       <h2>Cookies</h2>
@@ -181,9 +193,10 @@ function Datenschutz() {
 
       <h2>Google Fonts</h2>
       <p>
-        Zur einheitlichen Darstellung von Schriftarten werden Google Fonts geladen (Google Ireland
-        Limited). Dabei wird eine Verbindung zu Servern von Google hergestellt; Ihre IP-Adresse kann
-        übermittelt werden. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+        Die öffentliche Hauptseite und Demo laden Google Fonts (Google Ireland Limited). Dabei wird
+        eine Verbindung zu Servern von Google hergestellt; Ihre IP-Adresse kann übermittelt werden.
+        Die eigenständige Anbieter-Seite verwendet Systemschriften. Rechtsgrundlage ist Art. 6 Abs. 1
+        lit. f DSGVO.
       </p>
 
       <h2>Kontakt per E-Mail</h2>
