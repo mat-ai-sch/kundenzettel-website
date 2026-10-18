@@ -115,13 +115,18 @@ function Impressum() {
       <h1 id="legal-title">Impressum</h1>
       <p className="legal-intro">Angaben gemäß § 5 DDG</p>
 
-      <h2>Anbieter</h2>
+      <h2>Betreiber dieser Website</h2>
       <address>
-        Kundenzettel<br />
         Matthias Schürmann<br />
         Am Lunapark 5<br />
         41749 Viersen
       </address>
+
+      <h2>Anbieterin des Kundenzettel-Dienstes</h2>
+      <p>
+        WUNDERWERKstatt – Damaris Schürmann ist Anbieterin des geplanten Kundenzettel-Dienstes.
+        Der Dienst befindet sich in einer geschlossenen Pilotphase. <a href="/anbieter/">Angaben zur Dienstanbieterin</a>
+      </p>
 
       <h2>Kontakt</h2>
       <p>
@@ -144,10 +149,9 @@ function Datenschutz() {
         dieselbe.
       </p>
 
-      <h2>Verantwortlicher</h2>
-      <p>Verantwortlich für die Datenverarbeitung auf diesen Seiten ist:</p>
+      <h2>Verantwortlicher für Website und Demo</h2>
+      <p>Verantwortlich für die Datenverarbeitung auf den hier genannten öffentlichen Seiten ist:</p>
       <address>
-        Kundenzettel<br />
         Matthias Schürmann<br />
         Am Lunapark 5<br />
         41749 Viersen
@@ -157,16 +161,9 @@ function Datenschutz() {
 
       <h2>Hosting und Server-Logfiles</h2>
       <p>
-        Die genannten Seiten werden über IONOS (IONOS SE) bereitgestellt. Beim Aufruf verarbeitet IONOS
-        technische Zugriffsdaten, insbesondere IP-Adresse, Datum und Uhrzeit, aufgerufene Ressource und
-        Browsertyp. Die Verarbeitung dient der Bereitstellung und Absicherung der Seiten (Art. 6 Abs. 1
-        lit. f DSGVO).
-      </p>
-
-      <h2>Auftragsverarbeitung</h2>
-      <p>
-        Mit IONOS besteht ein Auftragsverarbeitungsvertrag nach Art. 28 DSGVO. Inhalt des Vertrags und
-        Angaben zu Unterauftragsverarbeitern ergeben sich aus den IONOS-Vertragsunterlagen.
+        Die öffentliche Website und Demo werden als statische Seiten über GitHub Pages bereitgestellt.
+        Beim Aufruf werden für die Übertragung technische Zugriffsdaten verarbeitet, insbesondere
+        IP-Adresse, Zeitpunkt, angeforderte Ressource und Browserangaben.
       </p>
 
       <h2>Öffentliche Website und Demo</h2>

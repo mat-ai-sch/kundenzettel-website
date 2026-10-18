@@ -674,6 +674,22 @@ body.landing-document {
 .lp-footer-brand {
   width: 120px;
 }
+.lp-footer-identity {
+  min-width: 0;
+}
+.lp-footer-provider {
+  margin: 8px 0 0;
+  color: var(--lp-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.lp-footer-provider a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+.lp-footer-provider a:hover {
+  color: var(--lp-ink);
+}
 .lp-footer-links {
   display: flex;
   flex-wrap: wrap;

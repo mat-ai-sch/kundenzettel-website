@@ -71,7 +71,7 @@ export default defineConfig(({ mode }) => {
           // /api/conversations as an SPA navigation and returns index.html
           // instead of the JSON response.  The same rule keeps live chat
           // data outside the service-worker cache.
-      navigateFallbackDenylist: [/^\/(?:api|operator|kz|_v)\//],
+      navigateFallbackDenylist: [/^\/(?:api|operator|kz|_v)\//, /^\/anbieter(?:\/|$)/],
           globPatterns: [
             '**/*.{js,css,html,ico,png,svg,woff2,jpg,jpeg,webp,webmanifest}',
           ],

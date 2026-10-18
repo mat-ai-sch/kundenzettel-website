@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fbfaf8" />
+    <meta name="description" content="Angaben zur Anbieterin des geplanten Kundenzettel-Dienstes." />
+    <title>Anbieterin des Dienstes – Kundenzettel</title>
+    <link rel="icon" type="image/png" href="/brand/favicon-32.png" />
+    <style>
+      * { box-sizing: border-box; }
+      html { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; color: #111; background: #fbfaf8; }
+      body { margin: 0; line-height: 1.6; }
+      a { color: #0c5039; text-underline-offset: 3px; }
+      a:focus-visible { outline: 3px solid #116b50; outline-offset: 4px; }
+      .shell { width: min(100% - 40px, 760px); margin-inline: auto; }
+      header { border-bottom: 1px solid #e8e8e8; }
+      header .shell { min-height: 80px; display: flex; align-items: center; }
+      .brand { display: inline-flex; align-items: center; gap: 12px; color: inherit; font-weight: 600; text-decoration: none; }
+      .brand img { width: 36px; height: 36px; }
+      main { padding-block: 52px 80px; }
+      .eyebrow { color: #5e7d63; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+      h1 { margin: 8px 0 28px; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; }
+      h2 { margin: 38px 0 10px; font-size: 1.2rem; }
+      p { max-width: 68ch; margin: 0 0 16px; }
+      address { font-style: normal; }
+      .card { padding: 28px; border: 1px solid #e4e8e3; border-radius: 16px; background: #fff; }
+      footer { padding-block: 22px 40px; border-top: 1px solid #e8e8e8; color: #565e59; font-size: 0.9rem; }
+      footer nav { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+      @media (max-width: 600px) {
+        main { padding-block: 36px 56px; }
+        .card { padding: 22px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="shell">
+        <a class="brand" href="/" aria-label="Kundenzettel – zur Startseite">
+          <img src="/brand/kundenzettel-mark.png" alt="" width="36" height="36" />
+          <span>Kundenzettel</span>
+        </a>
+      </div>
+    </header>
+    <main class="shell">
+      <p class="eyebrow">Dienstanbieterin</p>
+      <h1>Anbieterin des Kundenzettel-Dienstes</h1>
+      <section class="card" aria-label="Anbieterangaben">
+        <address>
+          <strong>WUNDERWERKstatt – Damaris Schürmann</strong><br />
+          Am Lunapark 5<br />
+          41749 Viersen<br />
+          E-Mail: <a href="mailto:info@kundenzettel.de">info@kundenzettel.de</a>
+        </address>
+      </section>
+      <h2>Stand des Dienstes</h2>
+      <p>Kundenzettel befindet sich in einer geschlossenen Pilotphase. Ein allgemeiner Zugang für weitere Betriebe ist derzeit nicht freigegeben.</p>
+      <h2>Website und Demo</h2>
+      <p>Die öffentliche Website kundenzettel.de und die Demo werden von Matthias Schürmann betrieben. Seine Angaben stehen im <a href="/#impressum">Impressum der Website</a>. Die dortigen <a href="/#datenschutz">Datenschutzhinweise</a> beziehen sich auf die öffentliche Website und Demo.</p>
+      <p>Für Fragen zum Kundenzettel-Dienst und zu dessen Datenschutz erreichen Sie Damaris Schürmann unter <a href="mailto:info@kundenzettel.de">info@kundenzettel.de</a>.</p>
+    </main>
+    <footer>
+      <nav class="shell" aria-label="Weitere Seiten">
+        <a href="/">Startseite</a>
+        <a href="/#impressum">Website-Impressum</a>
+        <a href="/#datenschutz">Datenschutz der Website und Demo</a>
+      </nav>
+    </footer>
+  </body>
+</html>

@@ -200,7 +200,12 @@ export function LandingPage() {
 
       <footer className="lp-footer">
         <div className="lp-footer-inner">
-          <img className="lp-footer-brand" src={brandWordmarkUrl} alt="Kundenzettel" loading="lazy" />
+          <div className="lp-footer-identity">
+            <img className="lp-footer-brand" src={brandWordmarkUrl} alt="Kundenzettel" loading="lazy" />
+            <p className="lp-footer-provider">
+              Anbieterin des geplanten Dienstes: <a href="/anbieter/">WUNDERWERKstatt – Damaris Schürmann</a>
+            </p>
+          </div>
           <nav className="lp-footer-links" aria-label="Rechtliches und Kontakt">
             <a href="#impressum">{landingCopy.footerImprint}</a>
             <a href="#datenschutz">{landingCopy.footerPrivacy}</a>
