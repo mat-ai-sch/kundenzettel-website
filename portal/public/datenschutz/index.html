@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>Datenschutz – Kundenzettel</title>
+  <meta name="description" content="Datenschutzhinweise für die öffentliche Kundenzettel-Website und Demo.">
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #191919; background: #f7f7f5; }
+    body { margin: 0; padding: 2rem 1rem; line-height: 1.65; }
+    main { box-sizing: border-box; max-width: 800px; margin: 0 auto; padding: clamp(1.4rem, 5vw, 3rem); background: white; border: 1px solid #e5e5e2; border-radius: 1.25rem; }
+    h1 { line-height: 1.15; letter-spacing: -.03em; }
+    h2 { margin-top: 2rem; font-size: 1.2rem; }
+    address { font-style: normal; }
+    a { color: #174b85; }
+    footer { margin-top: 2.5rem; color: #555; font-size: .95rem; }
+  </style>
+</head>
+<body>
+<main>
+  <p><a href="/">Kundenzettel</a></p>
+  <h1>Datenschutz</h1>
+  <p>Stand: 19. Oktober 2026</p>
+  <p>Diese Hinweise betreffen die öffentliche Website unter kundenzettel.de und www.kundenzettel.de einschließlich der Anbieter-Seite sowie die Demo unter demo.kundenzettel.de und www.demo.kundenzettel.de. Die geschützte Betreiber-App und die Verarbeitung im Kundenzettel-Dienst sind hiervon nicht erfasst. Für den Dienst gibt es einen <a href="/dienst-datenschutz/">eigenen Datenschutzhinweis</a>.</p>
+
+  <h2>Verantwortlicher für Website und Demo</h2>
+  <p>Verantwortlich für die Datenverarbeitung auf den hier genannten öffentlichen Seiten ist:</p>
+  <address>Matthias Schürmann<br>Am Lunapark 5<br>41749 Viersen<br>E-Mail: <a href="mailto:info@kundenzettel.de">info@kundenzettel.de</a></address>
+
+  <h2>Hosting und Server-Logfiles</h2>
+  <p>Die Dateien der öffentlichen Website und Demo werden über GitHub Pages ausgeliefert. Dabei fallen für die technische Übertragung insbesondere IP-Adresse, Zeitpunkt, angeforderte Ressource und Browserangaben an. Die Fragefunktion der Demo verwendet zusätzlich den unten genannten API-Endpunkt.</p>
+
+  <h2>Öffentliche Website und Demo</h2>
+  <p>kundenzettel.de und www.kundenzettel.de zeigen die öffentliche Website. demo.kundenzettel.de und www.demo.kundenzettel.de zeigen eine Demonstration mit fiktiven Beispieldaten. Chats, Aufträge und Kontakte der Demo bleiben im Browser und werden nicht an WhatsApp oder Meta übermittelt. Echte Kundenakten werden dort nicht geführt. Für Fragen an die Demo gilt der folgende Abschnitt.</p>
+
+  <h2>Fragefunktion der Demo</h2>
+  <p>Wenn Sie in der Demo eine eigene Frage senden oder eine Beispielfrage auswählen, übermittelt Ihr Browser den Fragetext und technische Verbindungsdaten an <code>api.kundenzettel.de/public/info/qa</code>, um eine Antwort zu erhalten. Bitte geben Sie dort keine Namen, Telefonnummern oder Angaben zu Aufträgen ein. Wenn ein Cloudflare-Turnstile-Sicherheitscheck für die Demo aktiviert ist, verbindet sich Ihr Browser außerdem mit <code>challenges.cloudflare.com</code>; ein daraus stammender Prüfwert wird mit der Frage übertragen.</p>
+  <p>Bei Fragen mit passenden Einträgen in der Kundenzettel-Wissensbasis wird der Fragetext zur Antworterstellung an die OpenAI API weitergegeben. Die API-Anfrage setzt <code>store: false</code>; das verhindert keine gesonderten Protokolle zur Missbrauchsüberwachung bei OpenAI. Unser berechtigtes Interesse ist es, eine interaktive Produktdemo anzubieten und missbräuchliche Anfragen an die öffentliche Schnittstelle zu begrenzen. Für diese Verarbeitung stützen wir uns auf Art. 6 Abs. 1 lit. f DSGVO.</p>
+  <p>Der Kundenzettel-Worker legt Fragen nicht in einer dauerhaften Datenbank ab. Für die Begrenzung auf zwölf öffentliche Fragen je IP-Adresse innerhalb von zehn Minuten hält er die IP-Adresse und einen Zähler im Arbeitsspeicher einer Worker-Instanz. Ein abgelaufenes Zählfenster wird erst bei einer weiteren Frage derselben IP-Adresse ersetzt; andernfalls verbleibt der Eintrag bis zum Ende dieser Worker-Instanz. Dafür besteht keine feste Löschfrist. Technische Protokolle der beteiligten Anbieter können unabhängig davon nach deren Einstellungen und Bedingungen gespeichert werden; die tatsächlich eingestellten Fristen sind hier nicht belegt. OpenAI bewahrt Protokolle zur Missbrauchsüberwachung nach seinen Standardangaben bis zu 30 Tage auf; gesetzliche oder Sicherheitsgründe können eine längere Aufbewahrung erfordern. <a href="https://developers.openai.com/api/docs/guides/your-data">OpenAI-Datenkontrollen</a></p>
+
+  <h2>Cookies</h2>
+  <p>Auf diesen Seiten werden keine Cookies zu Analyse- oder Marketingzwecken gesetzt.</p>
+
+  <h2>Google Fonts</h2>
+  <p>Die öffentliche Hauptseite und Demo laden Google Fonts (Google Ireland Limited). Dabei wird eine Verbindung zu Servern von Google hergestellt; Ihre IP-Adresse kann übermittelt werden. Die eigenständige Anbieter-Seite verwendet Systemschriften. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.</p>
+
+  <h2>Kontakt per E-Mail</h2>
+  <p>Wenn Sie uns per E-Mail kontaktieren, werden die übermittelten Angaben zur Bearbeitung Ihrer Nachricht verarbeitet (Art. 6 Abs. 1 lit. b oder f DSGVO).</p>
+
+  <h2>Deine Rechte</h2>
+  <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Zur Ausübung dieser Rechte genügt eine E-Mail an die oben genannte Adresse. Außerdem besteht ein Beschwerderecht bei einer Datenschutzaufsichtsbehörde.</p>
+
+  <footer><a href="/impressum/">Impressum</a> · <a href="/dienst-datenschutz/">Datenschutz zum Kundenzettel-Dienst</a></footer>
+</main>
+</body>
+</html>

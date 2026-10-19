@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react
 import { brandWordmarkUrl } from './brandAssets'
 import { InterestLead, openInterestLeadOnClick } from './InterestLead'
 import { landingCopy, landingLinks } from './landingCopy'
-import { LegalMenu } from './LegalMenu'
 import { ProductStory } from './landing/ProductStory'
 import { StoryTransport } from './landing/StoryTransport'
 import { TrustSection } from './landing/TrustSection'
@@ -207,16 +206,14 @@ export function LandingPage() {
             </p>
           </div>
           <nav className="lp-footer-links" aria-label="Rechtliches und Kontakt">
-            <a href="#impressum">{landingCopy.footerImprint}</a>
-            <a href="#datenschutz">{landingCopy.footerPrivacy}</a>
+            <a href="/impressum/">{landingCopy.footerImprint}</a>
+            <a href="/datenschutz/">{landingCopy.footerPrivacy}</a>
             <a className="lp-footer-mail" href={landingLinks.mail} onClick={openInterestLeadOnClick}>
               {landingCopy.footerMail}
             </a>
           </nav>
         </div>
       </footer>
-      {/* Bestehende Rechtstexte der Anwendung, geöffnet per #impressum / #datenschutz. */}
-      <LegalMenu />
       {/* Derselbe Kontakt-Dialog wie „Kontakt“ in der Demo (InterestLead). */}
       <InterestLead />
     </div>
