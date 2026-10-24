@@ -1,23 +1,30 @@
-# Kundenzettel-Website
+# Kundenzettel – öffentlicher Einstieg
 
-Dies ist das öffentliche Quellcode-Repository für die Kundenzettel-Landingpage. Die React-/Vite-Anwendung liegt in `portal/` und wird als statische Vorschau ohne Live-Kundendaten auf GitHub Pages veröffentlicht.
+`kundenzettel.de` und `www.kundenzettel.de` führen zur aktuellen Ansicht auf
+https://demo.kundenzettel.de/#/gespraeche. Die frühere Marie-/Kranz-Landingpage,
+ihr Quellcode, ihre Demo-App und ihre Medien sind aus dem aktuellen Stand entfernt.
 
-Der vollständige Projektstand einschließlich des geschützten Workers und der Weiterentwicklungsplanung liegt im privaten Repository `Moinwerk/Kundenzettel`. Änderungen an der Website müssen in beiden Repositories abgeglichen werden, bis ein automatischer Abgleich eingerichtet ist.
+## Ausschließliche Veröffentlichung über GitHub
 
-Für die lokale Prüfung Node.js 22 verwenden:
+- Dieses Repository veröffentlicht ausschließlich `site/` über GitHub Actions / Pages.
+- Die aktuelle Gesprächsoberfläche wird separat aus `mat-ai-sch/kundenzettel-demo` veröffentlicht.
+- Der Produktquellcode liegt in `Moinwerk/Kundenzettel`.
+- Cloudflare verwaltet DNS und Zugangsschutz; IONOS bleibt Domainregistrar.
+- Keine zusätzliche Buildquelle, Archiv-Ausgabe oder automatische Übernahme fremder Veröffentlichungen.
+
+Die Pfade `/anbieter/`, `/impressum/`, `/datenschutz/` und `/dienst-datenschutz/`
+bleiben erreichbar. Alte Rechtsseiten-Hashlinks werden auf diese Pfade umgesetzt.
+`/_v/update.html` und `sw.js` lösen frühere Website-Offline-Caches ab; Cookies,
+LocalStorage und geschützte Betreiber-Daten werden dabei nicht gelöscht.
+
+## Prüfung und Nachweis
 
 ```sh
-cd portal
-npm ci
-npm run lint
-npm test
-VITE_RUNTIME_MODE=preview VITE_BASE_PATH=/ npm run build
+node --test scripts/entry.test.mjs
+python scripts/verify-site.py
+python -m http.server 4190 --directory site
 ```
 
-Die Veröffentlichung umfasst ausschließlich `portal/dist`. Die geschützte Betreiber-App und die API werden dadurch nicht veröffentlicht.
-
-## Domains und alte Browseransichten
-
-`kundenzettel.de` ist die kanonische Website, `www.kundenzettel.de` leitet dorthin weiter. Beide verwenden GitHub Pages; Cloudflare verwaltet DNS und IONOS die Domainregistrierung. GitLab besitzt keine Domainbindung mehr und veröffentlicht nicht mehr.
-
-Die öffentliche Website registriert keinen Offline-Worker mehr. `portal/public/sw.js` löst bestehende Root-Registrierungen ab, ohne lokale Browserdaten zu löschen. Der direkte Einstieg https://kundenzettel.de/_v/update.html umgeht den früheren Dokument-Cache. Die getrennte Demo liegt ausschließlich unter https://demo.kundenzettel.de/.
+Die CI prüft die erlaubten Dateien, Rechtsseiten und Weiterleitungen. Sie erzeugt
+`release.json` mit dem GitHub-Commit und SHA-256-Prüfsummen. Der aktive Stand ist
+unter https://kundenzettel.de/release.json nachprüfbar.

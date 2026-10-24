@@ -1,4 +1,4 @@
-name: Kundenzettel-Website veröffentlichen
+name: Kundenzettel-Einstieg veröffentlichen
 
 on:
   push:
@@ -20,25 +20,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
-          cache-dependency-path: portal/package-lock.json
-      - run: npm ci
-        working-directory: portal
-      - run: npm run lint
-        working-directory: portal
-      - run: npm test
-        working-directory: portal
-      - run: npm run build
-        working-directory: portal
-        env:
-          VITE_PUBLIC_SURFACE: whatsapp
-          VITE_RUNTIME_MODE: preview
-          VITE_BASE_PATH: /
-      - run: test -f portal/dist/index.html
+      - run: node --check site/sw.js && node --test scripts/entry.test.mjs
+      - run: python3 scripts/verify-site.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: portal/dist
+          path: site
 
   deploy:
     needs: build
