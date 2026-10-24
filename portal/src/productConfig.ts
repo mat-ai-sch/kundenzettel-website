@@ -1,6 +1,6 @@
 /**
  * Öffentliche Vorschau-Oberfläche.
- * Auf GitLab Pages: VITE_PUBLIC_SURFACE=whatsapp → nur WhatsApp freigeschaltet.
+ * Auf GitHub Pages: VITE_PUBLIC_SURFACE=whatsapp → nur WhatsApp freigeschaltet.
  */
 export type PublicSurface = 'full' | 'whatsapp'
 

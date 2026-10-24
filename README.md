@@ -15,3 +15,9 @@ VITE_RUNTIME_MODE=preview VITE_BASE_PATH=/ npm run build
 ```
 
 Die Veröffentlichung umfasst ausschließlich `portal/dist`. Die geschützte Betreiber-App und die API werden dadurch nicht veröffentlicht.
+
+## Domains und alte Browseransichten
+
+`kundenzettel.de` ist die kanonische Website, `www.kundenzettel.de` leitet dorthin weiter. Beide verwenden GitHub Pages; Cloudflare verwaltet DNS und IONOS die Domainregistrierung. GitLab besitzt keine Domainbindung mehr und veröffentlicht nicht mehr.
+
+Die öffentliche Website registriert keinen Offline-Worker mehr. `portal/public/sw.js` löst bestehende Root-Registrierungen ab, ohne lokale Browserdaten zu löschen. Der direkte Einstieg https://kundenzettel.de/_v/update.html umgeht den früheren Dokument-Cache. Die getrennte Demo liegt ausschließlich unter https://demo.kundenzettel.de/.
