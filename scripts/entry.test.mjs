@@ -9,6 +9,8 @@ const worker = readFileSync(new URL('../site/sw.js', import.meta.url), 'utf8');
 async function navigate(hash = '', options = {}) {
   const removed = [];
   const unregistered = [];
+  const requests = [];
+  let documentConsumed = false;
   let destination;
   const registrations = ['https://kundenzettel.de/', 'https://kundenzettel.de/unrelated/'].map(scope => ({
     scope, unregister: async () => { unregistered.push(scope); },
@@ -22,10 +24,15 @@ async function navigate(hash = '', options = {}) {
     location: { hash, origin: 'https://kundenzettel.de', replace: value => { destination = value; } },
     navigator: options.noWorker ? {} : { serviceWorker: { getRegistrations: options.denied ? async () => { throw Error('denied'); } : async () => registrations } },
     window: options.noCache ? {} : { caches }, caches,
+    fetch: async (url, init) => {
+      requests.push({url, cache: init.cache, credentials: init.credentials, removed: [...removed]});
+      if (options.networkFailure) throw Error('offline');
+      return {arrayBuffer: async () => { documentConsumed = true; return new ArrayBuffer(0); }};
+    },
     setTimeout: fn => { const timer = setTimeout(fn, 30); timer.unref(); return timer; },
   };
   await vm.runInNewContext(entry, context);
-  return { destination, removed, unregistered };
+  return { destination, removed, unregistered, requests, documentConsumed };
 }
 
 test('Startseite führt zur aktuellen Demo; nur Root-Worker und Offline-Dateien werden entfernt', async () => {
@@ -43,9 +50,25 @@ test('Alte Rechtsseiten-Hashes bleiben erreichbar', async () => {
 });
 
 test('Nicht unterstützter oder gesperrter Speicher blockiert den Einstieg nicht', async () => {
-  for (const options of [{noWorker: true, noCache: true}, {denied: true}]) {
+  for (const options of [{noWorker: true, noCache: true}, {denied: true}, {networkFailure: true}]) {
     assert.equal((await navigate('', options)).destination, 'https://demo.kundenzettel.de/#/gespraeche');
   }
+});
+
+test('Kanonische Hauptseite wird nach dem Offline-Speicher im HTTP-Cache erneuert', async () => {
+  const result = await navigate();
+  assert.deepEqual(result.requests, [{
+    url: 'https://kundenzettel.de/', cache: 'reload', credentials: 'omit',
+    removed: ['workbox-precache-old', 'kundenzettel-old-assets'],
+  }]);
+  assert.equal(result.documentConsumed, true);
+});
+
+test('Gesperrte Worker-Abfrage verhindert weder Cache-Bereinigung noch frischen Hauptseitenabruf', async () => {
+  const result = await navigate('', {denied: true});
+  assert.equal(result.removed.length, 2);
+  assert.equal(result.requests.length, 1);
+  assert.equal(result.documentConsumed, true);
 });
 
 test('Ablöse-Worker entfernt alte Cache-Ausgabe und erhält Rechtstext-Pfade', async () => {

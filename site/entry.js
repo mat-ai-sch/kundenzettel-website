@@ -12,18 +12,29 @@
     : 'https://demo.kundenzettel.de/#/gespraeche';
 
   const cleanup = async () => {
-    if ('serviceWorker' in navigator) {
+    const retireWorker = async () => {
+      if (!('serviceWorker' in navigator)) return;
       const root = new URL('/', location.origin).href;
       const registrations = await navigator.serviceWorker.getRegistrations();
       await Promise.all(registrations.filter(item => item.scope === root).map(item => item.unregister()));
-    }
+    };
     // CacheStorage enthält hier öffentliche Offline-Dateien. Cookies und lokale Eingaben bleiben erhalten.
-    if ('caches' in window) {
+    const clearOfflineFiles = async () => {
+      if (!('caches' in window)) return;
       await Promise.all((await caches.keys()).map(key => caches.delete(key)));
-    }
+    };
+    await Promise.allSettled([retireWorker(), clearOfflineFiles()]);
+
+    // CacheStorage und HTTP-Cache sind getrennt. Auch den kanonischen Einstieg
+    // frisch speichern, damit der nächste Aufruf ohne Zusatzparameter aktuell ist.
+    const response = await fetch(new URL('/', location.origin).href, {
+      cache: 'reload',
+      credentials: 'omit',
+    });
+    await response.arrayBuffer();
   };
   try {
-    await Promise.race([cleanup(), new Promise(resolve => setTimeout(resolve, 1500))]);
+    await Promise.race([cleanup(), new Promise(resolve => setTimeout(resolve, 3000))]);
   } catch {
     // Ein gesperrter Browser-Speicher darf den Einstieg nicht verhindern.
   }
